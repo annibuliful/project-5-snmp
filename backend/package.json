@@ -1,0 +1,25 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "dev": "nodemon -L --exec 'ts-node' src/index.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/lowdb": "^1.0.9",
+    "fastify": "^3.9.2",
+    "fastify-compress": "^3.4.0",
+    "fastify-cors": "^5.1.0",
+    "lowdb": "^1.0.0",
+    "net-snmp": "^2.10.0",
+    "pino": "^6.8.0",
+    "pino-pretty": "^4.3.0",
+    "socket.io": "^3.0.4",
+    "typescript": "^4.1.3"
+  }
+}
