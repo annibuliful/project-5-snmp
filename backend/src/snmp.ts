@@ -58,7 +58,7 @@ const session = snmp.createSession("0.0.0.0", "public");
 const results = [];
 export const snmpUtil = (listOids: string[]) => {
   return new Promise((resolve, reject) => {
-    session.get(listOids, function(error, varbinds) {
+    session.get(listOids, function (error, varbinds) {
       // console.log("get Request");
       if (error) {
         console.error(error);
@@ -70,7 +70,7 @@ export const snmpUtil = (listOids: string[]) => {
           } else {
             //console.log (varbinds[i].oid + " = " + varbinds[i].value);
 
-            let result = results.find(result => result.oid == varbinds[i].oid);
+            let result = results.find((el) => el.oid == varbinds[i].oid);
             if (result == undefined) {
               let name: string;
 
@@ -117,7 +117,7 @@ export const snmpUtil = (listOids: string[]) => {
       // console.log("\n");
     });
 
-    session.trap(snmp.TrapType.LinkDown, function(error) {
+    session.trap(snmp.TrapType.LinkDown, function (error) {
       if (error) {
         console.error(error);
         reject(error);

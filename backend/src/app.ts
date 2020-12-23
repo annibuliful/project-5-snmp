@@ -36,10 +36,6 @@ fastify.register(require("fastify-compress"));
 
 export default async (port: number) => {
   io.on("connection", function (socket) {
-    console.log("connection");
-    socket.on("message", (message) => {
-      socket.broadcast.emit("message", message);
-    });
     socket.on("disconnect", function () {});
   });
 
@@ -61,8 +57,8 @@ export default async (port: number) => {
       try {
         const snmpResult = await snmpUtil(oids);
         const data = { id: nanoid(), ...snmpResult[0] };
-        db.get("results").push(data).write();
-        io.emit("report", data);
+        // db.get("results").push(data).write();
+        io.emit("message", data);
         // console.log("snmp result", snmpResult);
       } catch (e) {
         console.error(e);
