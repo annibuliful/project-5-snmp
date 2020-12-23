@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "dev": "nodemon -L --exec 'ts-node' src/index.ts"
+    "dev": "nodemon -L --exec 'ts-node' src/index.ts",
+    "start": "node ./dist"
   },
   "author": "",
   "license": "ISC",
@@ -16,12 +17,16 @@
     "fastify": "^3.9.2",
     "fastify-compress": "^3.4.0",
     "fastify-cors": "^5.1.0",
+    "knex": "^0.21.14",
     "lowdb": "^1.0.0",
+    "nanoid": "^3.1.20",
     "net-snmp": "^2.10.0",
+    "node-json-db": "^1.1.0",
     "pino": "^6.8.0",
     "pino-colada": "^2.1.0",
     "pino-pretty": "^4.3.0",
     "socket.io": "^3.0.4",
+    "sqlite3": "^5.0.0",
     "typescript": "^4.1.3"
   }
 }

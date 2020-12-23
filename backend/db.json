@@ -1,0 +1,70 @@
+{
+  "results": [
+    {
+      "id": "ppq73jWDLNzMyKDqOEBu2",
+      "oid": "1.3.6.1.2.1.4.3.0",
+      "name": "Inbound",
+      "value": 3946522,
+      "rate": 0,
+      "average": 0,
+      "max": 0,
+      "counter": 0,
+      "createdAt": "2020-12-23T12:55:17.767Z"
+    },
+    {
+      "id": "-SIzsRLoveIOSkA4wrflK",
+      "oid": "1.3.6.1.2.1.4.3.0",
+      "name": "Inbound",
+      "value": 3946522,
+      "rate": 0,
+      "average": 0,
+      "max": 0,
+      "counter": 1,
+      "createdAt": "2020-12-23T12:55:18.763Z"
+    },
+    {
+      "id": "scV7y1EW2Xlip_A4kaUZY",
+      "oid": "1.3.6.1.2.1.4.3.0",
+      "name": "Inbound",
+      "value": 3946522,
+      "rate": 0,
+      "average": 0,
+      "max": 0,
+      "counter": 2,
+      "createdAt": "2020-12-23T12:55:19.764Z"
+    },
+    {
+      "id": "KmpgV26mb3DK_n7B2Aczr",
+      "oid": "1.3.6.1.2.1.4.3.0",
+      "name": "Inbound",
+      "value": 3946522,
+      "rate": 0,
+      "average": 0,
+      "max": 0,
+      "counter": 3,
+      "createdAt": "2020-12-23T12:55:20.769Z"
+    },
+    {
+      "id": "zKo1jS-AGr6il4IoE3Itc",
+      "oid": "1.3.6.1.2.1.4.3.0",
+      "name": "Inbound",
+      "value": 3946522,
+      "rate": 0,
+      "average": 0,
+      "max": 0,
+      "counter": 4,
+      "createdAt": "2020-12-23T12:55:21.773Z"
+    },
+    {
+      "id": "ogczDF6elUTbEZn9DERe5",
+      "oid": "1.3.6.1.2.1.4.3.0",
+      "name": "Inbound",
+      "value": 3946548,
+      "rate": 0,
+      "average": 0,
+      "max": 0,
+      "counter": 5,
+      "createdAt": "2020-12-23T12:55:22.777Z"
+    }
+  ]
+}
