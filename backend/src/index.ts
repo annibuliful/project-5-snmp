@@ -1,3 +1,3 @@
 import startServer from "./app";
 
-startServer(3000);
+startServer(3030);

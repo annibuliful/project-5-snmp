@@ -1,5 +1,5 @@
 import Fastify, { FastifyInstance } from "fastify";
-import { Socket, Server } from "socket.io";
+
 import { nanoid } from "nanoid";
 
 const low = require("lowdb");
@@ -23,37 +23,28 @@ import { snmpUtil } from "./snmp";
 // "1.3.6.1.2.1.4.20.1.20"
 const oids = ["1.3.6.1.2.1.4.3.0"];
 
-setInterval(async () => {
-  try {
-    const snmpResult = await snmpUtil(oids);
-    const data = { id: nanoid(), ...snmpResult[0] };
-    db.get("results")
-      .push(data)
-      .write();
-
-    console.log("snmp result", snmpResult);
-  } catch (e) {
-    console.error(e);
-  }
-}, 1000);
-
 const fastify: FastifyInstance = Fastify({
-  logger
+  logger,
 });
 
-const io = new Server(fastify.server);
-io.on("connection", function(socket: Socket) {
-  console.log("New Connection from Client");
-  socket.on("message", function() {});
-  socket.on("disconnect", function() {});
+const io = require("socket.io")(fastify.server, {
+  // transports: ['websocket'],
 });
 
 fastify.register(require("fastify-cors"), {});
 fastify.register(require("fastify-compress"));
 
 export default async (port: number) => {
+  io.on("connection", function (socket) {
+    console.log("connection");
+    socket.on("message", (message) => {
+      socket.broadcast.emit("message", message);
+    });
+    socket.on("disconnect", function () {});
+  });
+
   try {
-    await fastify.listen(port);
+    await fastify.listen(port, "0.0.0.0");
     //
     // knex.schema.createTable("todos", function(table) {
     //   table.increments();
@@ -66,7 +57,17 @@ export default async (port: number) => {
     //   table.integer("counter");
     // });
 
-    fastify.log.info(`server listening on ${port}`);
+    setInterval(async () => {
+      try {
+        const snmpResult = await snmpUtil(oids);
+        const data = { id: nanoid(), ...snmpResult[0] };
+        db.get("results").push(data).write();
+        io.emit("report", data);
+        // console.log("snmp result", snmpResult);
+      } catch (e) {
+        console.error(e);
+      }
+    }, 5000);
   } catch (err) {
     fastify.log.error(err);
     process.exit(1);

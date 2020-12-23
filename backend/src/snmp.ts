@@ -59,7 +59,7 @@ const results = [];
 export const snmpUtil = (listOids: string[]) => {
   return new Promise((resolve, reject) => {
     session.get(listOids, function(error, varbinds) {
-      console.log("get Request");
+      // console.log("get Request");
       if (error) {
         console.error(error);
         reject(error);
@@ -70,9 +70,7 @@ export const snmpUtil = (listOids: string[]) => {
           } else {
             //console.log (varbinds[i].oid + " = " + varbinds[i].value);
 
-            console.log("var", varbinds[i]);
             let result = results.find(result => result.oid == varbinds[i].oid);
-            console.log("result", result);
             if (result == undefined) {
               let name: string;
 
@@ -97,7 +95,7 @@ export const snmpUtil = (listOids: string[]) => {
               result.value = varbinds[i].value;
               if (result.value > varbinds[i].value) {
                 //Integer number has wrapped for 32bit number
-                console.log("Wrapped");
+                // console.log("Wrapped");
                 result.rate = (4294967295 - oldValue + result.value) / 1024;
               } else {
                 result.rate = Math.round((result.value - oldValue) / 1024);
@@ -116,7 +114,7 @@ export const snmpUtil = (listOids: string[]) => {
       }
       resolve(results);
       // session.close();
-      console.log("\n");
+      // console.log("\n");
     });
 
     session.trap(snmp.TrapType.LinkDown, function(error) {
