@@ -53,10 +53,25 @@ import snmp from "net-snmp";
 //   }
 //   console.log("\n");
 // });
-
-const session = snmp.createSession("0.0.0.0", "public");
 const results = [];
-export const snmpUtil = (listOids: string[]) => {
+const user = {
+  name: "admin-management",
+};
+
+const list = [
+  "192.168.100.2",
+  "192.168.100.1",
+  "192.168.200.1",
+  "192.168.200.2",
+  "10.99.1.2",
+  // "127.0.0.1",
+];
+
+const randomIp = () => list[Math.floor(Math.random() * list.length)];
+
+export const snmpUtil = (listOids: string[], ip: string) => {
+  const session = snmp.createSession(ip, "public");
+
   return new Promise((resolve, reject) => {
     session.get(listOids, function (error, varbinds) {
       // console.log("get Request");
@@ -88,6 +103,7 @@ export const snmpUtil = (listOids: string[]) => {
               result.average = 0;
               result.max = 0;
               result.counter = 0;
+              result.ip = randomIp();
               results.push(result);
             } else {
               result.counter++;

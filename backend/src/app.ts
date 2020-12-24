@@ -7,17 +7,6 @@ const FileSync = require("lowdb/adapters/FileSync");
 
 const adapter = new FileSync("db.json");
 const db = low(adapter);
-
-// import { JsonDB } from "node-json-db";
-// import { Config } from "node-json-db/dist/lib/JsonDBConfig";
-// var db = new JsonDB(new Config("myDataBase", true, false, "/"));
-// const knex = require("knex")({
-//   client: "sqlite3",
-//   connection: {
-//     filename: "./db.sqlite3"
-//   },
-//   useNullAsDefault: true
-// });
 import logger from "./logger";
 import { snmpUtil } from "./snmp";
 // "1.3.6.1.2.1.4.20.1.20"
@@ -34,6 +23,14 @@ const io = require("socket.io")(fastify.server, {
 fastify.register(require("fastify-cors"), {});
 fastify.register(require("fastify-compress"));
 
+const callSnmp = async (ip: string) => {
+  const snmpResult = await snmpUtil(oids, ip);
+  const data = { id: nanoid(), ...snmpResult[0] };
+  console.log("data", data);
+  // db.get("results").push(data).write();
+  io.emit("message", data);
+};
+
 export default async (port: number) => {
   io.on("connection", function (socket) {
     socket.on("disconnect", function () {});
@@ -41,29 +38,24 @@ export default async (port: number) => {
 
   try {
     await fastify.listen(port, "0.0.0.0");
-    //
-    // knex.schema.createTable("todos", function(table) {
-    //   table.increments();
-    //   table.string("oid");
-    //   table.string("name");
-    //   table.integer("value");
-    //   table.integer("rate");
-    //   table.integer("average");
-    //   table.integer("max");
-    //   table.integer("counter");
-    // });
+    const list = [
+      // "192.168.100.2",
+      // "192.168.100.1",
+      // "192.168.200.1",
+      // "192.168.200.2",
+      // "10.99.1.2",
+      "127.0.0.1",
+      // "192.168.43.100",
+      // "192.168.43.90",
+      // "192.168.43.107",
+      // "192.168.43.45",
+    ];
 
-    setInterval(async () => {
-      try {
-        const snmpResult = await snmpUtil(oids);
-        const data = { id: nanoid(), ...snmpResult[0] };
-        // db.get("results").push(data).write();
-        io.emit("message", data);
-        // console.log("snmp result", snmpResult);
-      } catch (e) {
-        console.error(e);
-      }
-    }, 5000);
+    list.forEach((el) =>
+      setInterval(() => {
+        callSnmp(el);
+      }, 1000)
+    );
   } catch (err) {
     fastify.log.error(err);
     process.exit(1);
