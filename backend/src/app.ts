@@ -51,11 +51,35 @@ export default async (port: number) => {
       // "192.168.43.45",
     ];
 
-    list.forEach((el) =>
-      setInterval(() => {
-        callSnmp(el);
-      }, 1000)
-    );
+    setInterval(() => {
+      console.log("call", list[0]);
+      callSnmp(list[0]);
+    }, 5000);
+    // setInterval(() => {
+    //   console.log("call", list[1]);
+
+    //   callSnmp(list[1]);
+    // }, 5000);
+    // setInterval(() => {
+    //   console.log("call", list[2]);
+
+    //   callSnmp(list[2]);
+    // }, 5000);
+    // setInterval(() => {
+    //   console.log("call", list[3]);
+
+    //   callSnmp(list[3]);
+    // }, 5000);
+    // setInterval(() => {
+    //   console.log("call", list[4]);
+
+    //   callSnmp(list[4]);
+    // }, 5000);
+    // list.forEach((el) =>
+    //   setInterval(() => {
+    //     callSnmp(el);
+    //   }, 1000)
+    // );
   } catch (err) {
     fastify.log.error(err);
     process.exit(1);

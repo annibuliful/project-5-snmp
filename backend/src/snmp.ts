@@ -70,6 +70,7 @@ const list = [
 const randomIp = () => list[Math.floor(Math.random() * list.length)];
 
 export const snmpUtil = (listOids: string[], ip: string) => {
+  // const session = snmp.createSession(ip, "management");
   const session = snmp.createSession(ip, "public");
 
   return new Promise((resolve, reject) => {
@@ -103,7 +104,7 @@ export const snmpUtil = (listOids: string[], ip: string) => {
               result.average = 0;
               result.max = 0;
               result.counter = 0;
-              result.ip = randomIp();
+              result.ip = ip;
               results.push(result);
             } else {
               result.counter++;
@@ -122,7 +123,7 @@ export const snmpUtil = (listOids: string[], ip: string) => {
                 result.counter = 0;
               }
               //Now take an average
-              result.average = Math.round((result.average + result.rate) / 2);
+              result.average = Math.round((result.average + result.value) / 2);
             }
             result.createdAt = new Date();
           }

@@ -51,32 +51,32 @@ const App = () => {
     //   createdAt: "2020-12-23T13:54:14.103Z",
     // },
   ]);
-  const [dataChart, setDataChart] = useState({
-    labels: ["Current", "Average", "Maximum", "Minimum"],
-    datasets: [
-      {
-        label: "SNMP DataSet",
-        fill: false,
-        lineTension: 0.1,
-        backgroundColor: "rgba(75,192,192,0.4)",
-        borderColor: "rgba(75,192,192,1)",
-        borderCapStyle: "butt",
-        borderDash: [],
-        borderDashOffset: 0.0,
-        borderJoinStyle: "miter",
-        pointBorderColor: "rgba(75,192,192,1)",
-        pointBackgroundColor: "#fff",
-        pointBorderWidth: 1,
-        pointHoverRadius: 5,
-        pointHoverBackgroundColor: "rgba(75,192,192,1)",
-        pointHoverBorderColor: "rgba(220,220,220,1)",
-        pointHoverBorderWidth: 2,
-        pointRadius: 1,
-        pointHitRadius: 10,
-        data: [0, 0, 0, 0],
-      },
-    ],
-  });
+  // const [dataChart, setDataChart] = useState({
+  //   labels: ["Current", "Average", "Maximum", "Minimum"],
+  //   datasets: [
+  //     {
+  //       label: "SNMP DataSet",
+  //       fill: false,
+  //       lineTension: 0.1,
+  //       backgroundColor: "rgba(75,192,192,0.4)",
+  //       borderColor: "rgba(75,192,192,1)",
+  //       borderCapStyle: "butt",
+  //       borderDash: [],
+  //       borderDashOffset: 0.0,
+  //       borderJoinStyle: "miter",
+  //       pointBorderColor: "rgba(75,192,192,1)",
+  //       pointBackgroundColor: "#fff",
+  //       pointBorderWidth: 1,
+  //       pointHoverRadius: 5,
+  //       pointHoverBackgroundColor: "rgba(75,192,192,1)",
+  //       pointHoverBorderColor: "rgba(220,220,220,1)",
+  //       pointHoverBorderWidth: 2,
+  //       pointRadius: 1,
+  //       pointHitRadius: 10,
+  //       data: [0, 0, 0, 0],
+  //     },
+  //   ],
+  // });
 
   const [transferRateChart, setTransferRateChart] = useState({
     labels: [],
@@ -126,8 +126,9 @@ const App = () => {
     setDataSummary(newData);
   };
   const onUpdateTransferRate = (timeStamp: string, value: number) => {
-    const labelMinute = Math.floor(getMinutes(new Date(timeStamp)) / 30);
-    const label = `${format(new Date(timeStamp), "d MMM yyyy")}-${labelMinute}`;
+    const labelMinute = Math.floor(getMinutes(new Date(timeStamp)) / 10);
+    // const label = `${format(new Date(timeStamp), "d MMM yyyy")}-${labelMinute}`;
+    const label = timeStamp;
     setTransferRateChart((prev) => {
       const listLabels = prev.labels;
       const labelIndex = listLabels.findIndex((el) => el === label);
@@ -149,15 +150,15 @@ const App = () => {
     socket.on("message", (data: IReportData) => {
       onUpdateTransferRate(data.createdAt, data.value);
       onUpdateSummaryData(data);
-      setDataChart((prev) => ({
-        ...prev,
-        datasets: [
-          {
-            ...prev.datasets[0],
-            data: [data.rate, data.average, data.max, 0],
-          },
-        ],
-      }));
+      // setDataChart((prev) => ({
+      //   ...prev,
+      //   datasets: [
+      //     {
+      //       ...prev.datasets[0],
+      //       data: [data.rate, data.average, data.max, 0],
+      //     },
+      //   ],
+      // }));
 
       setListData((prev) => [data, ...prev]);
     });
